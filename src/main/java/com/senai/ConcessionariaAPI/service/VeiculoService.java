@@ -1,5 +1,6 @@
 package com.senai.ConcessionariaAPI.service;
 
+import com.senai.ConcessionariaAPI.exception.RecursoNaoEncontradoException;
 import com.senai.ConcessionariaAPI.model.Veiculo;
 import com.senai.ConcessionariaAPI.repository.VeiculoRepository;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,10 @@ public class VeiculoService {
     }
 
     public Veiculo findById(int id){
-        return repository.findById(id);
+        if (repository.existsById(id)){
+            return repository.findById(id);
+        }
+        throw new RecursoNaoEncontradoException("Veículo de ID " + id + " não foi encontrado.");
     }
 
     public Veiculo updateAndCreate(Veiculo veiculo){
@@ -52,4 +56,5 @@ public class VeiculoService {
     public void deleteById(int id){
         repository.deleteById(id);
     }
+
 }

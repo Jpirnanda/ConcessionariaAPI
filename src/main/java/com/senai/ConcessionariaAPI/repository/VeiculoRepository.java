@@ -58,5 +58,8 @@ public class VeiculoRepository {
         listaVeiculos.removeIf(veiculo -> veiculo.getId() == id);
     }
 
-
+    // Verificar se um recurso existe
+    public boolean existsById(int id){
+        return listaVeiculos.stream().anyMatch(veiculo -> veiculo.getId() == id);
+    }
 }
