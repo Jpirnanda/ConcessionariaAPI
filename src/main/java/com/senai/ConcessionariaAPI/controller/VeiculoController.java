@@ -3,6 +3,8 @@ package com.senai.ConcessionariaAPI.controller;
 import com.senai.ConcessionariaAPI.model.Veiculo;
 import com.senai.ConcessionariaAPI.repository.VeiculoRepository;
 import com.senai.ConcessionariaAPI.service.VeiculoService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,8 +21,10 @@ public class VeiculoController {
 
     // Create
     @PostMapping
-    public Veiculo create(@RequestBody Veiculo veiculo){
-        return service.create(veiculo);
+    public ResponseEntity<Veiculo> create(@RequestBody Veiculo veiculo){
+        Veiculo veiculoCriado =  service.create(veiculo);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(veiculoCriado);
     }
 
     // Read
