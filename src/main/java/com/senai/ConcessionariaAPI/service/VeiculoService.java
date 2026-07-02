@@ -6,6 +6,7 @@ import com.senai.ConcessionariaAPI.repository.VeiculoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class VeiculoService {
@@ -35,22 +36,20 @@ public class VeiculoService {
             throw new IllegalArgumentException("O ano digitado é inválido. Digite um ano entre 2000 e " + anoLimite);
         }
 
-        return repository.create(veiculo);
+        return repository.save(veiculo);
     }
 
-    public ArrayList<Veiculo> findAll(){
+    public List<Veiculo> findAll(){
         return repository.findAll();
     }
 
     public Veiculo findById(int id){
-        if (repository.existsById(id)){
-            return repository.findById(id);
-        }
-        throw new RecursoNaoEncontradoException("Veículo de ID " + id + " não foi encontrado.");
+        return repository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Veículo de ID " + id + " não foi encontrado."));
     }
 
     public Veiculo updateAndCreate(Veiculo veiculo){
-        return repository.updateAndCreate(veiculo);
+        return repository.save(veiculo);
     }
 
     public void deleteById(int id){
